@@ -6,13 +6,17 @@
   <title>Wedding Gallery</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
       background: #000;
     }
 
-    /* SCROLLABLE SLIDER */
+    /* MAIN SCROLLABLE SLIDER */
     .slider {
       display: flex;
       overflow-x: auto;
@@ -41,22 +45,35 @@
       object-fit: cover;
     }
 
+    /* TEXT OVER IMAGE */
     .text {
       position: absolute;
-      bottom: 20%;
-      left: 10%;
+      bottom: 15%;
+      left: 8%;
+      right: 8%;
       color: white;
-      font-size: 24px;
-      background: rgba(0,0,0,0.4);
-      padding: 10px 15px;
-      border-radius: 10px;
-      max-width: 80%;
+      font-size: 22px;
+      background: rgba(0,0,0,0.45);
+      padding: 12px 16px;
+      border-radius: 12px;
+      max-width: 600px;
     }
 
-    @media (max-width: 600px) {
+    /* TABLET */
+    @media (max-width: 768px) {
       .text {
         font-size: 18px;
-        bottom: 15%;
+        bottom: 12%;
+      }
+    }
+
+    /* PHONE */
+    @media (max-width: 480px) {
+      .text {
+        font-size: 16px;
+        bottom: 10%;
+        left: 5%;
+        right: 5%;
       }
     }
   </style>
@@ -65,6 +82,7 @@
 <body>
 
 <div class="slider">
+
   <div class="slide">
     <img src="img1.jpg" />
     <div class="text">From all our memories to this moment…</div>
@@ -109,50 +127,8 @@
     <img src="img3.jpg" />
     <div class="text">will you be my bridesmaid?</div>
   </div>
+
 </div>
-
-<script>
-  const slider = document.querySelector('.slider');
-  const slides = document.querySelectorAll('.slide');
-
-  let index = 0;
-
-  function goToSlide(i) {
-    slides[i].scrollIntoView({
-      behavior: 'smooth',
-      inline: 'start'
-    });
-  }
-
-  function nextSlide() {
-    index = (index + 1) % slides.length;
-    goToSlide(index);
-  }
-
-  // AUTO SCROLL EVERY 4 SECONDS
-  let interval = setInterval(nextSlide, 4000);
-
-  // Detect manual scroll and sync index
-  slider.addEventListener('scroll', () => {
-    const scrollLeft = slider.scrollLeft;
-    const width = slider.offsetWidth;
-
-    index = Math.round(scrollLeft / width);
-
-    // reset timer after user interaction
-    clearInterval(interval);
-    interval = setInterval(nextSlide, 4000);
-  });
-
-  // mobile touch interaction handling
-  slider.addEventListener('touchstart', () => {
-    clearInterval(interval);
-  });
-
-  slider.addEventListener('touchend', () => {
-    interval = setInterval(nextSlide, 4000);
-  });
-</script>
 
 </body>
 </html>
