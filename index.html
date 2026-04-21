@@ -12,29 +12,33 @@
       background: #000;
     }
 
+    /* SCROLLABLE SLIDER */
     .slider {
-      position: relative;
-      width: 100%;
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
       height: 100vh;
-      overflow: hidden;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* hide scrollbar */
+    .slider::-webkit-scrollbar {
+      display: none;
     }
 
     .slide {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      opacity: 0;
-      transition: opacity 1s ease-in-out;
+      position: relative;
+      min-width: 100%;
+      height: 100vh;
+      scroll-snap-align: start;
+      flex-shrink: 0;
     }
 
     .slide img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-    }
-
-    .active {
-      opacity: 1;
     }
 
     .text {
@@ -61,63 +65,93 @@
 <body>
 
 <div class="slider">
-  <div class="slide active">
+  <div class="slide">
     <img src="img1.jpg" />
     <div class="text">From all our memories to this moment…</div>
   </div>
 
   <div class="slide">
-     <img src="img2.jpg" />
+    <img src="img2.jpg" />
     <div class="text">You’ve been part of my story for so long</div>
   </div>
-  
-   <div class="slide">
-     <img src="img4.jpg" />
+
+  <div class="slide">
+    <img src="img4.jpg" />
     <div class="text">Through every laugh and every day</div>
   </div>
 
-   <div class="slide">
-     <img src="img5.jpg" />
+  <div class="slide">
+    <img src="img5.jpg" />
     <div class="text">I’ve been lucky to have you</div>
   </div>
 
-   <div class="slide">
-     <img src="img6.jpg" />
+  <div class="slide">
+    <img src="img6.jpg" />
     <div class="text">And I will be even luckier to have you by my side</div>
   </div>
 
-   <div class="slide">
-     <img src="img7.jpg" />
+  <div class="slide">
+    <img src="img7.jpg" />
     <div class="text">For my happily ever after</div>
   </div>
 
-   <div class="slide">
-     <img src="img8.jpg" />
+  <div class="slide">
+    <img src="img8.jpg" />
     <div class="text">I would love to share my most special moments with you…</div>
   </div>
 
-   <div class="slide">
-     <img src="img9.jpg" />
+  <div class="slide">
+    <img src="img9.jpg" />
     <div class="text">So...</div>
   </div>
 
-   <div class="slide">
-     <img src="img3.jpg" />
+  <div class="slide">
+    <img src="img3.jpg" />
     <div class="text">will you be my bridesmaid?</div>
   </div>
 </div>
 
 <script>
-  let slides = document.querySelectorAll('.slide');
+  const slider = document.querySelector('.slider');
+  const slides = document.querySelectorAll('.slide');
+
   let index = 0;
 
-  function showNextSlide() {
-    slides[index].classList.remove('active');
-    index = (index + 1) % slides.length;
-    slides[index].classList.add('active');
+  function goToSlide(i) {
+    slides[i].scrollIntoView({
+      behavior: 'smooth',
+      inline: 'start'
+    });
   }
 
-  setInterval(showNextSlide, 9000); // change every 3 sec
+  function nextSlide() {
+    index = (index + 1) % slides.length;
+    goToSlide(index);
+  }
+
+  // AUTO SCROLL EVERY 4 SECONDS
+  let interval = setInterval(nextSlide, 4000);
+
+  // Detect manual scroll and sync index
+  slider.addEventListener('scroll', () => {
+    const scrollLeft = slider.scrollLeft;
+    const width = slider.offsetWidth;
+
+    index = Math.round(scrollLeft / width);
+
+    // reset timer after user interaction
+    clearInterval(interval);
+    interval = setInterval(nextSlide, 4000);
+  });
+
+  // mobile touch interaction handling
+  slider.addEventListener('touchstart', () => {
+    clearInterval(interval);
+  });
+
+  slider.addEventListener('touchend', () => {
+    interval = setInterval(nextSlide, 4000);
+  });
 </script>
 
 </body>
