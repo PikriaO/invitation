@@ -243,7 +243,7 @@ button {
   <div class="slide">
     <div class="image-wrapper">
 
-      <img src="img6.jpg" />
+      <img src="img5.jpg" />
 
       <div class="overlay">
         <div class="modal">
@@ -251,15 +251,15 @@ button {
           <div class="heart">💗</div>
 
           <div class="title">
-            are you sure you want to<br/>
-            be my <span>bridesmaid?</span>
+            Will you be my<br/>
+            <span>bridesmaid?</span>
           </div>
 
           <div class="divider"></div>
 
           <div class="buttons">
             <button class="btn-yes" onclick="showVideo()">yes</button>
-            <button class="btn-yesofcourse" onclick="openInvitation()">yes of course</button>
+            <button class="btn-yesofcourse" onclick="showVideo()">yes of course</button>
           </div>
 
         </div>
@@ -275,13 +275,7 @@ button {
     </div>
   </div>
 
-</div>
-
-<!-- INVITATION -->
-<div id="invitation" class="invitation">
-  <h1>💍 Wedding Invitation 💍<br/>You’re officially invited!</h1>
-</div>
-
+</div> 
 <script>
 function showVideo() {
   document.getElementById("video").classList.remove("hidden");
@@ -289,10 +283,7 @@ function showVideo() {
   document.getElementById("videoSlide").scrollIntoView({ behavior: "smooth" });
 }
 
-function openInvitation() {
-  document.querySelector(".slider").style.display = "none";
-  document.getElementById("invitation").classList.add("show");
-}
+ 
 </script>
 
 </body>
