@@ -51,12 +51,16 @@
       box-shadow: 0 10px 40px rgba(0,0,0,0.6);
     }
 
-    .image-wrapper img,
+    .image-wrapper img
+     {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
     .image-wrapper video {
       width: 100%;
       height: 100%;
       object-fit: scale-down;
-      background: black;
     }
 
     .text {
@@ -71,12 +75,13 @@
       border-radius: 12px;
     }
 
-    /* BUTTONS SCREEN */
-    .decision {
+    /* BUTTONS ON BRIDESMAID SLIDE */
+    .buttons {
       position: absolute;
       bottom: 30px;
       display: flex;
       gap: 15px;
+      flex-wrap: wrap;
       justify-content: center;
       width: 100%;
     }
@@ -90,10 +95,16 @@
       background: white;
       color: black;
       font-weight: bold;
+      transition: 0.3s;
     }
 
     .btn:hover {
       transform: scale(1.05);
+    }
+
+    /* HIDDEN VIDEO */
+    .hidden {
+      display: none;
     }
 
     /* INVITATION */
@@ -104,15 +115,11 @@
       align-items: center;
       text-align: center;
       background: #111;
+      padding: 20px;
     }
 
     .invitation.show {
       display: flex;
-    }
-
-    /* VIDEO hidden by default */
-    .hidden {
-      display: none;
     }
   </style>
 </head>
@@ -123,60 +130,97 @@
 
   <div class="slide">
     <div class="image-wrapper">
-      <img src="img1.jpg">
+      <img src="img1.jpg" />
       <div class="text">From all our memories to this moment…</div>
     </div>
   </div>
 
   <div class="slide">
     <div class="image-wrapper">
-      <img src="img7.jpg">
+      <img src="img7.jpg" />
       <div class="text">You’ve been part of my story for so long</div>
     </div>
   </div>
 
   <div class="slide">
     <div class="image-wrapper">
-      <img src="img6.jpg">
-      <div class="text">Will you be my bridesmaid?</div>
+      <img src="img4.jpg" />
+      <div class="text">Through every laugh and every day</div>
     </div>
   </div>
 
-  <!-- FINAL DECISION SLIDE -->
+  <div class="slide">
+    <div class="image-wrapper">
+      <img src="img9.jpg" />
+      <div class="text">I’ve been lucky to have you</div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="image-wrapper">
+      <img src="img8.jpg" />
+      <div class="text">And I will be even luckier to have you by my side</div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="image-wrapper">
+      <img src="img2.jpg" />
+      <div class="text">I would love to share my most special moments with you…</div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="image-wrapper">
+      <img src="img5.jpg" />
+      <div class="text">So...</div>
+    </div>
+  </div>
+
+  <!-- BRIDESMAID SLIDE (BUTTONS MOVED HERE) -->
   <div class="slide">
     <div class="image-wrapper">
 
-      <!-- VIDEO (hidden initially) -->
-      <video id="video" class="hidden" src="vid1.MOV" controls></video>
+      <img src="img6.jpg" />
 
-      <!-- BUTTONS -->
-      <div id="buttons" class="decision">
-        <button class="btn" onclick="playVideo()">Yes</button>
+      <div class="text">Will you be my bridesmaid?</div>
+
+      <div class="buttons">
+        <button class="btn" onclick="showVideo()">Yes</button>
         <button class="btn" onclick="openInvitation()">Yes of course</button>
       </div>
 
     </div>
   </div>
 
+  <!-- VIDEO SLIDE -->
+  <div class="slide" id="videoSlide">
+    <div class="image-wrapper">
+
+      <video id="video" class="hidden" src="vid1.MOV" controls></video>
+
+    </div>
+  </div>
+
 </div>
 
-<!-- INVITATION SCREEN -->
+<!-- INVITATION -->
 <div id="invitation" class="invitation">
   <h1>💍 Wedding Invitation 💍<br/>You’re officially invited!</h1>
 </div>
 
 <script>
-  function playVideo() {
+  function showVideo() {
     document.getElementById("video").classList.remove("hidden");
-    document.getElementById("buttons").style.display = "none";
+    document.getElementById("video").play();
 
-    const video = document.getElementById("video");
-    video.play();
+    // scroll to video slide
+    document.getElementById("videoSlide").scrollIntoView({ behavior: "smooth" });
   }
 
   function openInvitation() {
-    document.getElementById("invitation").classList.add("show");
     document.querySelector(".slider").style.display = "none";
+    document.getElementById("invitation").classList.add("show");
   }
 </script>
 
